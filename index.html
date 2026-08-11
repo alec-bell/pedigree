@@ -123,7 +123,8 @@ footer{margin-top:44px;color:var(--muted);font-size:11.5px;border-top:1px solid 
 .appbar button:active,.chartbar button:active{background:#e7dfcc}
 .appbar .sep,.chartbar .sep{width:1px;height:20px;background:var(--rule,#ddd);margin:0 4px}
 .chartbar .chint{font-size:12px;opacity:.65;margin-left:auto}
-.scroll{overflow:auto;cursor:grab;position:relative;background:#fdfcfa}
+.scroll{overflow:auto;cursor:grab;position:relative;background:#fdfcfa;
+ touch-action:pan-x pan-y;overscroll-behavior:contain}
 .scroll.dragging{cursor:grabbing;user-select:none}
 .sizer{position:relative;overflow:hidden}
 .inner{transform-origin:0 0;position:absolute;left:0;top:0;padding:26px 14px 14px}
@@ -483,9 +484,41 @@ sc.addEventListener('wheel',function(e){
  if(e.ctrlKey||e.metaKey){e.preventDefault();var r=sc.getBoundingClientRect();
   setZ(z*(e.deltaY<0?1.12:1/1.12),e.clientX-r.left,e.clientY-r.top)}
  else if(e.shiftKey){e.preventDefault();sc.scrollLeft+=(e.deltaY||e.deltaX)}},{passive:false});
+// ---- pinch: zoom the chart, never the page ----
+(function(){
+ var pd=null;                                  // {dist, cx, cy, z0}
+ function dist(a,b){var dx=a.clientX-b.clientX,dy=a.clientY-b.clientY;return Math.hypot(dx,dy)}
+ sc.addEventListener('touchstart',function(e){
+  if(e.touches.length!==2){pd=null;return}
+  e.preventDefault();
+  var r=sc.getBoundingClientRect(),a=e.touches[0],b=e.touches[1];
+  pd={d:dist(a,b),cx:(a.clientX+b.clientX)/2-r.left,cy:(a.clientY+b.clientY)/2-r.top,z0:z};
+ },{passive:false});
+ sc.addEventListener('touchmove',function(e){
+  if(!pd||e.touches.length!==2)return;
+  e.preventDefault();
+  var a=e.touches[0],b=e.touches[1],d=dist(a,b);
+  if(pd.d>0)setZ(pd.z0*(d/pd.d),pd.cx,pd.cy);
+ },{passive:false});
+ function end(e){if(e.touches.length<2)pd=null}
+ sc.addEventListener('touchend',end);sc.addEventListener('touchcancel',end);
+ // Safari fires its own gesture events for pinch and would zoom the page
+ ['gesturestart','gesturechange','gestureend'].forEach(function(ev){
+  sc.addEventListener(ev,function(e){
+   e.preventDefault();
+   if(ev==='gesturestart'){sc.__gz=z;return}
+   if(ev==='gesturechange'&&sc.__gz){var r=sc.getBoundingClientRect();
+    setZ(sc.__gz*e.scale,(e.clientX||0)-r.left,(e.clientY||0)-r.top)}
+  },{passive:false});
+ });
+ // a stray ctrl+wheel or pinch that lands outside the chart must not zoom the page either
+ document.addEventListener('wheel',function(e){if(e.ctrlKey)e.preventDefault()},{passive:false});
+})();
 var drag=null,moved=false;
 sc.addEventListener('pointerdown',function(e){
- if(e.button!==0)return;drag={x:e.clientX,y:e.clientY,l:sc.scrollLeft,t:sc.scrollTop};
+ if(e.button!==0)return;
+ if(e.pointerType==='touch'&&e.isPrimary===false){drag=null;return}
+ drag={x:e.clientX,y:e.clientY,l:sc.scrollLeft,t:sc.scrollTop};
  moved=false;sc.classList.add('dragging')});
 window.addEventListener('pointermove',function(e){if(!drag)return;
  var dx=e.clientX-drag.x,dy=e.clientY-drag.y;
