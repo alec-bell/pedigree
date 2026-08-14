@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Bell Deep Line — evidence map</title>
+<style>
+:root{
+  --surface:#fcfcfb; --ink:#2b2b28; --ink2:#6b6b64; --muted:#a09f96;
+  --ok:#2e7d4f; --part:#b07d1e; --hyp:#6a4fb3; --miss:#b3473d;
+  --ok-bg:#e3efe6; --part-bg:#fdf3dc; --hyp-bg:#ece7f5; --lead-bg:#f1f0ec; --miss-bg:#f8e3e0;
+  --card:#ffffff; --line:#dedcd4;
+}
+@media (prefers-color-scheme: dark){:root{
+  --surface:#1a1a19; --ink:#e8e6df; --ink2:#a5a39a; --muted:#75746c;
+  --ok:#57a878; --part:#c07f33; --hyp:#9b7fd4; --miss:#d06a5e;
+  --ok-bg:#243b2d; --part-bg:#3d3120; --hyp-bg:#2e2740; --lead-bg:#262622; --miss-bg:#402724;
+  --card:#232322; --line:#3a3a36;
+}}
+body[data-theme="dark"]{--surface:#1a1a19; --ink:#e8e6df; --ink2:#a5a39a; --muted:#75746c;
+  --ok:#57a878; --part:#c07f33; --hyp:#9b7fd4; --miss:#d06a5e;
+  --ok-bg:#243b2d; --part-bg:#3d3120; --hyp-bg:#2e2740; --lead-bg:#262622; --miss-bg:#402724;
+  --card:#232322; --line:#3a3a36;}
+body{margin:0;background:var(--surface);color:var(--ink);font:14px/1.45 -apple-system,"Segoe UI",Roboto,sans-serif;}
+.wrap{max-width:1060px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:21px;margin:0 0 2px} .sub{color:var(--ink2);margin:0 0 18px;font-size:13px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:0 0 14px;font-size:12px;color:var(--ink2)}
+.legend .sw{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.legend .ln{display:inline-block;width:26px;height:0;border-top:2px solid;margin-right:5px;vertical-align:3px}
+svg{width:100%;height:auto;display:block}
+.node rect{fill:var(--card);stroke:var(--line);stroke-width:1.2;rx:7}
+.node.ok rect{fill:var(--ok-bg);stroke:var(--ok)} .node.part rect{fill:var(--part-bg);stroke:var(--part)}
+.node.hyp rect{fill:var(--hyp-bg);stroke:var(--hyp)} .node.lead rect{fill:var(--lead-bg);stroke:var(--muted);stroke-dasharray:5 3}
+.node.miss rect{fill:var(--miss-bg);stroke:var(--miss)}
+.node text{fill:var(--ink)} .node .nm{font-weight:600;font-size:13px} .node .dt{font-size:10.5px;fill:var(--ink2)}
+.badge{font-size:9px;font-weight:700;letter-spacing:.4px}
+.b-ok{fill:var(--ok)} .b-part{fill:var(--part)} .b-hyp{fill:var(--hyp)} .b-lead{fill:var(--muted)} .b-miss{fill:var(--miss)}
+.edge{fill:none;stroke-width:2}
+.e-ok{stroke:var(--ok)} .e-part{stroke:var(--part)} .e-hyp{stroke:var(--hyp);stroke-dasharray:6 4}
+.e-miss{stroke:var(--miss);stroke-dasharray:3 5;stroke-width:2.4} .e-lead{stroke:var(--muted);stroke-dasharray:2 5}
+.elabel{font-size:10.5px;fill:var(--ink2)} .elabel.red{fill:var(--miss);font-weight:600}
+.cluster{fill:none;stroke:var(--line);stroke-dasharray:7 5;rx:10}
+.clabel{font-size:11px;fill:var(--ink2);font-weight:600;letter-spacing:.3px}
+.note{font-size:10.5px;fill:var(--muted);font-style:italic}
+#tip{position:fixed;pointer-events:none;background:var(--card);border:1px solid var(--line);border-radius:8px;
+ padding:9px 11px;font-size:12px;max-width:300px;box-shadow:0 4px 14px rgba(0,0,0,.15);opacity:0;transition:opacity .12s;color:var(--ink)}
+#tip b{display:block;margin-bottom:3px} #tip .ev{color:var(--ink2);font-size:11px;margin-top:4px}
+details{margin-top:26px;color:var(--ink2)} summary{cursor:pointer;font-weight:600;color:var(--ink)}
+table{border-collapse:collapse;margin-top:10px;font-size:12.5px;width:100%}
+td,th{border:1px solid var(--line);padding:5px 8px;text-align:left;vertical-align:top} th{color:var(--ink)}
+</style></head><body>
+<div class="wrap">
+<h1>The Bell deep line — every layer, graded by its evidence</h1>
+<p class="sub">Built 14 Aug 2026 · evidence tags refer to <code>Bell/BELL-00_Research_Notes.md</code> · the ahnentafel chart remains the formal record; this page is the map of what holds it up.</p>
+<div class="legend">
+ <span><span class="sw" style="background:var(--ok-bg);border:1.5px solid var(--ok)"></span>documented</span>
+ <span><span class="sw" style="background:var(--part-bg);border:1.5px solid var(--part)"></span>probable (asserted, one source)</span>
+ <span><span class="sw" style="background:var(--hyp-bg);border:1.5px solid var(--hyp)"></span>hypothesis (candidate)</span>
+ <span><span class="sw" style="background:var(--lead-bg);border:1.5px dashed var(--muted)"></span>lead (compiled / unplaced)</span>
+ <span><span class="ln" style="border-color:var(--ok)"></span>documented link</span>
+ <span><span class="ln" style="border-color:var(--part)"></span>asserted by one document</span>
+ <span><span class="ln" style="border-color:var(--hyp);border-top-style:dashed"></span>inferred</span>
+ <span><span class="ln" style="border-color:var(--miss);border-top-style:dotted"></span>missing document</span>
+</div>
+<svg viewBox="0 0 1040 1450" role="img" aria-label="Bell deep line evidence map">
+ <!-- ===== LAYER: VIRGINIA CLAN ===== -->
+ <rect class="cluster" x="20" y="26" width="1000" height="240" rx="10"/>
+ <text class="clabel" x="36" y="48">RACCOON SWAMP / SPRING SWAMP BELL CLAN — Albemarle Parish, Surry &amp; Sussex Co., Virginia · 1730s–1770s · all LEAD grade [BELL-183–185]</text>
+ <g class="node lead" data-tip="<b>John Bell of Surry Co., d. 1776 · wife Hannah</b>Will proved 18 Jun 1776: ~635 acres on Spring Swamp; witness Silvanus Stokes Jr. Names five sons and three daughters.<div class='ev'>[BELL-185] · Surry Deeds &amp; Wills, ark 3Q9M-C9PX-KBY</div>">
+  <rect x="330" y="62" width="290" height="48"/>
+  <text class="nm" x="345" y="82">John Bell of Surry (d. 1776)</text>
+  <text class="dt" x="345" y="98">= Hannah · Spring Swamp, ~635 ac. · LEAD</text>
+ </g>
+ <g class="node lead" data-tip="<b>The five sons named in the 1776 will</b>John (135 ac.) · Burrell · Benjamin (&amp; Martha) · Balaam (&amp; Mary, d. 1755) · James (&amp; Mildrid, the home 500 ac.)<div class='ev'>[BELL-184, BELL-185]</div>">
+  <rect x="60" y="140" width="430" height="52"/>
+  <text class="nm" x="75" y="160">Sons: John · Burrell · Benjamin · Balaam · James</text>
+  <text class="dt" x="75" y="176">their families fill the parish register, 1745–1775 · LEAD</text>
+ </g>
+ <g class="node lead" data-tip="<b>Parallel parish branches — not in the 1776 will</b>Thomas &amp; Mary (sons JESSE b. 1745, JOHN) · William &amp; Faith · William &amp; Sarah · Joseph · Sylvanus.<div class='ev'>[BELL-184] · the likely source of a son named William</div>">
+  <rect x="530" y="140" width="450" height="52"/>
+  <text class="nm" x="545" y="160">Parallel branches: Thomas &amp; Mary · Wm &amp; Faith · Wm &amp; Sarah…</text>
+  <text class="dt" x="545" y="176">no William among the patriarch’s sons — the open question · LEAD</text>
+ </g>
+ <text class="note" x="36" y="228">The STOKES family runs beside them at every layer: Silvanus Jr. witnesses the patriarch’s will · Cecilia Stokes godmother 1746/7 · Micajah parks his property with W. R. Bell, 1784–87.</text>
+ <path class="edge e-lead" d="M275 192 V 246"/><path class="edge e-lead" d="M755 192 V 246"/>
+ <path class="edge e-lead" d="M275 246 H 520 M755 246 H 520 M520 246 V 300"/>
+ <text class="elabel" x="534" y="286">attachment unproven — which branch fathered William Rasor is THE open Virginia question</text>
+
+ <!-- ===== LAYER: CLAREMONT CLUSTER ===== -->
+ <rect class="cluster" x="20" y="300" width="1000" height="170" rx="10"/>
+ <text class="clabel" x="36" y="322">CLAREMONT COUNTY / SALEM CLUSTER — South Carolina · 1784–1809 [BELL-181–182]</text>
+ <g class="node lead" data-tip="<b>Frederick Bell</b>Witness to W.R.B.’s 1784 &amp; 1787 deeds; land co-surveyed with him on the North Branch of Black River 1787; sold Darlington-proved land 1794; a documented Revolutionary claimant.<div class='ev'>[BELL-153, BELL-182] · brother or father of W.R.B. — not established</div>">
+  <rect x="52" y="338" width="250" height="48"/>
+  <text class="nm" x="67" y="358">Frederick Bell</text>
+  <text class="dt" x="67" y="374">Rev. claimant · kinsman, degree unproven · LEAD</text>
+ </g>
+ <g class="node lead" data-tip="<b>Lewis Bell · John Bell · Mary X Bell</b>Lewis witnessed the 1803 will, was sued with Frederick 1802–04, estate levied after a conviction 1804–05. John proved the 1794 Darlington deed. Mary signed its receipt by mark.<div class='ev'>[BELL-181, BELL-182]</div>">
+  <rect x="322" y="338" width="240" height="48"/>
+  <text class="nm" x="337" y="358">Lewis · John · Mary X Bell</text>
+  <text class="dt" x="337" y="374">the 1794 deed cluster · LEAD</text>
+ </g>
+ <g class="node hyp" data-tip="<b>William Rasor Bell (node 256) = Mary (node 257)</b>Claremont planter by 1784; the Stokes trust 1787; d. 1808×09. Will of 26 Dec 1803 names nine sons — Archibald second. Mary’s maiden name unproven (‘Mary English’ = unverified tree claim).<div class='ev'>[BELL-152, BELL-181, BELL-182] · on the chart as hypothesis — stands or falls with node 128</div>">
+  <rect x="600" y="332" width="390" height="60"/>
+  <text class="nm" x="615" y="354">William Rasor Bell (d. 1808×09) = Mary</text>
+  <text class="dt" x="615" y="370">planter, Salem · 9 sons, 2 daughters · nodes 256/257</text>
+  <text class="badge b-hyp" x="615" y="384">HYPOTHESIS — CONDITIONAL ON NODE 128</text>
+ </g>
+ <path class="edge e-part" d="M795 392 V 470"/>
+ <text class="elabel" x="782" y="440" text-anchor="end">1803 will: “my son Archibald Bell” — asserted [BELL-152/181]</text>
+
+ <!-- ===== LAYER: ARCHIBALD ===== -->
+ <g class="node hyp" data-tip="<b>Archibald “Archy” Bell (node 128) = Martha (node 129)</b>b. ~1770–75 · Salem, Lynches Creek · will 4 Oct 1839 names residue children beginning JOHN BELL · household holds a boy of John’s exact age in 1820 AND 1830 · d. Oct 1839; widow Margaret remarried Severance.<div class='ev'>[BELL-147…185] · five adversarial reviews have held this at hypothesis: no document asserts our John is his son</div>">
+  <rect x="600" y="470" width="390" height="60"/>
+  <text class="nm" x="615" y="492">Archibald “Archy” Bell (d. 1839) = Martha</text>
+  <text class="dt" x="615" y="508">275 ac., Lynches Creek, Salem · nodes 128/129</text>
+  <text class="badge b-hyp" x="615" y="522">HYPOTHESIS — THE STRONGEST CIRCUMSTANTIAL CASE IN THE FILE</text>
+ </g>
+ <path class="edge e-miss" d="M795 530 V 622"/>
+ <text class="elabel red" x="782" y="566" text-anchor="end">THE MISSING DOCUMENT [BELL-180]</text>
+ <text class="elabel" x="782" y="582" text-anchor="end">no record asserts “John, son of Archibald”</text>
+ <text class="elabel" x="782" y="598" text-anchor="end">the test: SCDAH settlements &amp; receipts — reopening ~17 Aug</text>
+
+ <!-- ===== LAYER: PROVEN LINE ===== -->
+ <rect class="cluster" x="470" y="622" width="550" height="700" rx="10"/>
+ <text class="clabel" x="486" y="644">THE PROVEN LINE — Barbour County, Alabama → Alec [six documented generations]</text>
+ <g class="node ok" data-tip="<b>John Bell (node 64) — DOCUMENTED</b>b. 13 Jan 1807 SC · Barbour Co. from 1840 · deed of 30 Jan 1850 with ‘Lany Bell his wife’ · d. 21 Nov 1890, buried Beasley Family Cemetery.<div class='ev'>[BELL-120, BELL-140, BELL-151, BELL-164]</div>">
+  <rect x="600" y="660" width="390" height="56"/>
+  <text class="nm" x="615" y="682">John Bell (1807–1890) = Laney (~1806–1873)</text>
+  <text class="dt" x="615" y="698">Louisville, Barbour Co., Alabama · nodes 64/65 · ok / part</text>
+ </g>
+ <path class="edge e-ok" d="M795 716 V 762"/>
+ <g class="node ok" data-tip="<b>John T. Bell (node 32) — DOCUMENTED</b>b. 10 Jun 1841 · Co. A, 5th Alabama, Blackford’s sharpshooters · m. Mar 1861 Sallie Cox · d. 6 Nov 1915; obituary: “His parents moved to Alabama from Darlington, S.C., about 1830.”<div class='ev'>[BELL-132, BELL-177]</div>">
+  <rect x="600" y="762" width="390" height="56"/>
+  <text class="nm" x="615" y="784">John T. Bell (1841–1915) = Sarah “Sallie” Cox</text>
+  <text class="dt" x="615" y="800">the 1915 obituary carries the Darlington sentence · ok</text>
+ </g>
+ <path class="edge e-ok" d="M795 818 V 864"/>
+ <g class="node ok" data-tip="<b>Thomas Jefferson Bell (node 16) = Alice May Bradley (17)</b>d. 30 Aug 1921 · both documented.">
+  <rect x="600" y="864" width="390" height="52"/>
+  <text class="nm" x="615" y="886">Thomas Jefferson Bell (d. 1921) = Alice May Bradley</text>
+  <text class="dt" x="615" y="902">nodes 16/17 · ok</text>
+ </g>
+ <path class="edge e-ok" d="M795 916 V 962"/>
+ <g class="node ok" data-tip="<b>John Henry Bell (node 8) = Margaret Beatrice Eaken (9)</b>b. 4 Aug 1901 Barbour Co. · d. 1944×1956 (his death is the line’s other open hunt) · Margaret 1908–1983, portraits in the gallery.">
+  <rect x="600" y="962" width="390" height="52"/>
+  <text class="nm" x="615" y="984">John Henry Bell (b. 1901) = Margaret Beatrice Eaken</text>
+  <text class="dt" x="615" y="1000">nodes 8/9 · ok</text>
+ </g>
+ <path class="edge e-ok" d="M795 1014 V 1060"/>
+ <g class="node ok" data-tip="<b>Robert Lee Bell Sr. (node 4)</b>Documented; details in the main chart.">
+  <rect x="600" y="1060" width="390" height="48"/>
+  <text class="nm" x="615" y="1080">Robert Lee Bell Sr.</text>
+  <text class="dt" x="615" y="1096">node 4 · ok</text>
+ </g>
+ <path class="edge e-ok" d="M795 1108 V 1154"/>
+ <g class="node ok" data-tip="<b>Two living generations</b>Shown without details per the living-people rule.">
+  <rect x="600" y="1154" width="390" height="44"/>
+  <text class="nm" x="615" y="1174">(living) → Alec Bell</text>
+  <text class="dt" x="615" y="1190">nodes 2 · 1 · the researcher himself</text>
+ </g>
+ <text class="note" x="486" y="1246">Collaterals: W. W. Bell (1839–1924) &amp; C. A. “Curve” Bell — John T.’s brothers per the 1915 obituary ·</text>
+ <text class="note" x="486" y="1262">William Wesley Bell of Darlington (b. 1820), residue legatee, alive 1866, daughter “Margaret Louisa.”</text>
+ <text class="note" x="36" y="1360">Every claim on this page carries its evidence tag; the grades are the project’s own, held by five adversarial reviews.</text>
+ <text class="note" x="36" y="1378">One document at SCDAH turns the red dotted line solid — or cuts it. Either way the map is finished honestly.</text>
+</svg>
+<details><summary>Table view — every person on this map</summary>
+<table><tr><th>Person</th><th>Grade</th><th>Key evidence</th></tr>
+<tr><td>John Bell of Surry (d. 1776) = Hannah</td><td>lead</td><td>Will proved 18 Jun 1776, Spring Swamp; wit. Silvanus Stokes Jr. [BELL-185]</td></tr>
+<tr><td>Sons John, Burrell, Benjamin, Balaam, James</td><td>lead</td><td>Named in the 1776 will; families in the parish register [BELL-184/185]</td></tr>
+<tr><td>Thomas &amp; Mary, Wm &amp; Faith, Wm &amp; Sarah, Joseph, Sylvanus</td><td>lead</td><td>Parish register couples not in the will [BELL-184]</td></tr>
+<tr><td>Frederick Bell</td><td>lead</td><td>1784/1787/1794 with W.R.B.; Rev. claimant [BELL-153, BELL-182]</td></tr>
+<tr><td>Lewis Bell · John Bell · Mary X Bell</td><td>lead</td><td>1794 Darlington-proved deed; 1803 will witness [BELL-181/182]</td></tr>
+<tr><td>William Rasor Bell (256) = Mary (257)</td><td>hypothesis</td><td>Will 26 Dec 1803 asserting son Archibald; d. 1808×09 [BELL-152/181]</td></tr>
+<tr><td>Archibald Bell (128) = Martha (129)</td><td>hypothesis</td><td>Will 1839; census brackets 1820/1830; five refusals recorded [BELL-147–185]</td></tr>
+<tr><td>John Bell (64) = Laney (65)</td><td>ok / part</td><td>1850 deed “Lany Bell his wife”; censuses; Beasley Cemetery [BELL-164 etc.]</td></tr>
+<tr><td>John T. Bell (32) = Sallie Cox (33)</td><td>ok</td><td>1915 obituary; marriage 1861; service record [BELL-177]</td></tr>
+<tr><td>T. J. Bell (16) = Alice May Bradley (17)</td><td>ok</td><td>main chart</td></tr>
+<tr><td>John Henry Bell (8) = Margaret B. Eaken (9)</td><td>ok</td><td>main chart</td></tr>
+<tr><td>Robert Lee Bell Sr. (4) → (living) → Alec (1)</td><td>ok</td><td>main chart; living people redacted</td></tr>
+</table></details>
+</div>
+<div id="tip"></div>
+<script>
+const tip=document.getElementById('tip');
+document.querySelectorAll('.node').forEach(n=>{
+ n.addEventListener('mousemove',e=>{tip.innerHTML=n.dataset.tip;tip.style.opacity=1;
+  const w=tip.offsetWidth,h=tip.offsetHeight;
+  tip.style.left=Math.min(e.clientX+14,innerWidth-w-8)+'px';
+  tip.style.top=Math.min(e.clientY+14,innerHeight-h-8)+'px';});
+ n.addEventListener('mouseleave',()=>tip.style.opacity=0);
+});
+</script>
+</body></html>
