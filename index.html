@@ -50,6 +50,9 @@ a.node:hover{border-color:var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.10)}
 a.node .nm{font-size:12px;font-weight:600;line-height:1.2}
 a.node.hasav{padding-left:46px}
 a.node .av{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;object-fit:cover;border:1px solid var(--line);background:var(--panel)}
+a.node .av.ph{display:block;background-size:cover}
+a.node .av.ph.m{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2030%2030%22%3E%3Crect%20width%3D%2230%22%20height%3D%2230%22%20fill%3D%22%23dde5ee%22/%3E%3Ccircle%20cx%3D%2215%22%20cy%3D%2212%22%20r%3D%225.6%22%20fill%3D%22%237f93ab%22/%3E%3Cpath%20d%3D%22M9.2%2010.6c.3-3.6%202.8-5.6%205.8-5.6s5.6%202%205.8%205.6c-1.4-1.7-3.4-2.4-5.8-2.4s-4.4.7-5.8%202.4z%22%20fill%3D%22%235e738c%22/%3E%3Cpath%20d%3D%22M4.5%2030c.7-6.2%204.9-9.6%2010.5-9.6s9.8%203.4%2010.5%209.6z%22%20fill%3D%22%237f93ab%22/%3E%3C/svg%3E")}
+a.node .av.ph.f{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2030%2030%22%3E%3Crect%20width%3D%2230%22%20height%3D%2230%22%20fill%3D%22%23f3e0e6%22/%3E%3Cpath%20d%3D%22M8.3%2020.5c-.4-2.2-.3-5%20.2-7.6C9.3%208.3%2011.8%205.4%2015%205.4s5.7%202.9%206.5%207.5c.5%202.6.6%205.4.2%207.6z%22%20fill%3D%22%239c6f80%22/%3E%3Ccircle%20cx%3D%2215%22%20cy%3D%2212.4%22%20r%3D%225.1%22%20fill%3D%22%23c494a6%22/%3E%3Cpath%20d%3D%22M5%2030c.8-5.8%204.7-9%2010-9s9.2%203.2%2010%209z%22%20fill%3D%22%23c494a6%22/%3E%3C/svg%3E")}
 a.node .dt{font-size:10px;color:var(--muted);margin-top:2px;font-family:ui-sans-serif,system-ui,sans-serif;line-height:1.25}
 details.ent{border-bottom:1px solid var(--line);padding:0}
 details.ent.part{background:var(--part-bg)}details.ent.hyp{background:var(--hyp-bg)}details.ent.gap{background:var(--gap-bg)}
@@ -327,7 +330,7 @@ function render(){layout();
   var cls='node '+n.g+(p===sel?' sel':''),chip='';
   if(DATA[2*p]||DATA[2*p+1])chip='<b class="tg" data-t="'+p+'" title="'+(open[p]?'Collapse this line':'Show the ancestors of this line')+'">'
     +(open[p]?'\u2212':'+'+above(p))+'</b>';
-  var av=n.av?(typeof n.av==='string'?'<img class="av" loading="lazy" alt="" src="'+n.av+'">':'<img class="av" loading="lazy" alt="" src="'+n.av.u+'" style="object-position:'+(n.av.c[0]*100)+'% '+(n.av.c[1]*100)+'%">'):'';
+  var av=n.av?(typeof n.av==='string'?'<img class="av" loading="lazy" alt="" src="'+n.av+'">':'<img class="av" loading="lazy" alt="" src="'+n.av.u+'" style="object-position:'+(n.av.c[0]*100)+'% '+(n.av.c[1]*100)+'%">'):'<span class="av ph '+(p===1||p%2===0?'m':'f')+'" title="No photograph yet"></span>';
   cards.push('<a class="'+cls+(av?' hasav':'')+'" id="c'+p+'" href="#p'+p+'" style="left:'+x+'px;top:'+y+'px;width:'+COLW+'px">'+av
    +'<span class="nm">'+n.n+'</span><span class="dt">'+n.d+'</span>'+chip+'</a>');
   if(open[p]){var ks=[2*p,2*p+1].filter(function(k){return DATA[k]!==undefined});
