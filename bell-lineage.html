@@ -3,20 +3,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Bell Line — paternal descent of Alexander Timothy Bell</title>
 <style>
-:root{--ok:#1a7f37;--part:#b58900;--hyp:#b34700;--gap:#8250df;--ink:#1f2328;--mut:#59636e;--line:#d1d9e0}
+:root{--ok:#1a7f37;--part:#b58900;--hyp:#b34700;--gap:#8250df;--ink:#1f2328;--mut:#59636e;--line:#d1d9e0;
+ --bg:#faf9f7;--card:#fff;--frontier:#fffdf8;--link:#0969da;--det:#2d333b;--proof:#f6f8fa;--shadow:rgba(31,35,40,.06);color-scheme:light dark}
+@media (prefers-color-scheme:dark){:root{--ok:#4fc27a;--part:#e0b44a;--hyp:#ff9a5a;--gap:#b493f5;--ink:#e6e4df;--mut:#a09a92;
+ --line:#3a3d43;--bg:#141518;--card:#1d1f23;--frontier:#211f1a;--link:#7cb4ff;--det:#cfcac2;--proof:#26282d;--shadow:rgba(0,0,0,.4)}}
 *{box-sizing:border-box}
-body{font:16px/1.55 Georgia,'Times New Roman',serif;color:var(--ink);margin:0;background:#faf9f7}
+body{font:16px/1.55 Georgia,'Times New Roman',serif;color:var(--ink);margin:0;background:var(--bg)}
 .wrap{max-width:860px;margin:0 auto;padding:40px 20px 80px}
 h1{font-size:30px;margin:0 0 4px;letter-spacing:.2px}
 .sub{color:var(--mut);margin:0 0 6px;font-style:italic}
 .counts{color:var(--mut);font:14px/1.4 system-ui,sans-serif;margin-bottom:34px}
 .counts b{color:var(--ink)}
 .secthead{font:700 13px/1 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin:38px 0 14px;border-bottom:1px solid var(--line);padding-bottom:8px}
-.card{background:#fff;border:1px solid var(--line);border-left:4px solid var(--ok);border-radius:8px;padding:16px 20px;box-shadow:0 1px 3px rgba(31,35,40,.06)}
+.card{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--ok);border-radius:8px;padding:16px 20px;box-shadow:0 1px 3px var(--shadow)}
 .card.g-part{border-left-color:var(--part)}
 .card.g-hyp{border-left-color:var(--hyp)}
 .card.g-gap{border-left-color:var(--gap)}
-.card.frontier{border-left-color:var(--hyp);border-style:dashed;background:#fffdf8}
+.card.frontier{border-left-color:var(--hyp);border-style:dashed;background:var(--frontier)}
 .genlab{font:600 11px/1 system-ui,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-bottom:6px}
 .who{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
 .nm{font-size:21px;font-weight:700}
@@ -26,10 +29,10 @@ h1{font-size:30px;margin:0 0 4px;letter-spacing:.2px}
 .wife{margin-top:8px;font-size:15px}
 .wife .wdates{color:var(--mut);font-size:13.5px}
 details{margin-top:10px;font-size:14.5px}
-summary{cursor:pointer;color:#0969da;font:600 13px/1 system-ui,sans-serif}
-.det{margin-top:8px;color:#2d333b}
+summary{cursor:pointer;color:var(--link);font:600 13px/1 system-ui,sans-serif}
+.det{margin-top:8px;color:var(--det)}
 .det p{margin:.5em 0}
-.proof{margin-top:10px;font-size:14px;background:#f6f8fa;border-radius:6px;padding:8px 12px}
+.proof{margin-top:10px;font-size:14px;background:var(--proof);border-radius:6px;padding:8px 12px}
 .tags{margin-top:8px;font:600 12px/1 ui-monospace,monospace;color:var(--mut)}
 .link{height:34px;display:flex;justify-content:center}
 .link .bar{width:3px;background:var(--line)}
@@ -40,7 +43,7 @@ summary{cursor:pointer;color:#0969da;font:600 13px/1 system-ui,sans-serif}
 <h1>The Bell Line</h1>
 <p class="sub">The paternal descent of Alexander Timothy Bell, from the furthest-back Bell we can name — oldest first.</p>
 <div class="counts">10 generations on the chart: <b>7 documented</b> · <b>0 probable</b> · <b>3 hypothesis</b>.
-The dashed cards at the top are the research frontier — candidates above the proven chart, under active investigation. Built 28 October 2026.</div>
+The dashed cards at the top are the research frontier — candidates above the proven chart, under active investigation. Built 29 October 2026.</div>
 <div class="secthead">The frontier — the ladder still being proven</div>
 
 <div class="card frontier">
